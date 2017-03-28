@@ -1,0 +1,390 @@
+---
+swagger: '2.0'
+info:
+  title: Bitcoin API
+  description: Blockchain Facilities
+  version: "2.0.0"
+  contact:
+    name: Astar
+    url: http://www.astarlabs.com
+    email: contato@astarlabs.com
+  license:
+    name: GNU 3.0
+    url: http://www.gnu.org/licenses/
+  termsOfService: https://www.astarlabs.com/terms/
+host: dev.astar.tech:8085
+schemes:
+  - http
+  - https
+basePath: /v2
+consumes:
+  - application/x-www-form-urlencoded
+produces:
+  - application/json
+paths:
+  /send/opreturn/base64:
+    post:
+      summary: Send file hash to bitcoin blockchain
+      description: |
+        Send an OP_RETURN transaction with a base64 encoded file and return the API id for the blockchain transaction.
+      operationId: sendFile
+      parameters:
+        - name: token
+          in: formData
+          description: a signed JWT token with the company privatekey.
+          required: true
+          type: string
+          format: string
+        - name: account
+          in: formData
+          description: API ID for Account where the coins must be spend.
+          required: true
+          type: integer
+          format: integer
+        - name: user
+          in: formData
+          description: API user name.
+          required: true
+          type: string
+          format: string
+        - name: pass
+          in: formData
+          description: API user password.
+          required: true
+          type: string
+          format: string
+        - name: base64
+          in: formData
+          description: base64 encoded file.
+          required: true
+          type: string
+          format: string
+        - name: coin
+          in: formData
+          description: the coin name - bitcoin/litecoin.
+          required: true
+          type: string
+          format: string
+        - name: test
+          in: formData
+          description: if test = 1 so use testnet else test = 0 for mainnet.
+          required: true
+          type: integer
+          format: integer
+      tags:
+        - Send
+      responses:
+        default:
+          description: API id for blockchain transaction/Error
+          schema:
+            $ref: '#/definitions/SingleResult'
+  /send/opreturn/string:
+    post:
+      summary: Send string to bitcoin blockchain
+      description: |
+        Send an OP_RETURN transaction with a string and return the API id for the blockchain transaction.
+      operationId: sendString
+      parameters:
+        - name: token
+          in: formData
+          description: a signed JWT token with the company privatekey.
+          required: true
+          type: string
+          format: string
+        - name: account
+          in: formData
+          description: API ID for Account where the coins must be spend.
+          required: true
+          type: integer
+          format: integer
+        - name: user
+          in: formData
+          description: API user name.
+          required: true
+          type: string
+          format: string
+        - name: pass
+          in: formData
+          description: API user password.
+          required: true
+          type: string
+          format: string
+        - name: string
+          in: formData
+          description: string to send.
+          required: true
+          type: string
+          format: string
+        - name: coin
+          in: formData
+          description: the coin name - bitcoin/litecoin.
+          required: true
+          type: string
+          format: string
+        - name: test
+          in: formData
+          description: if test = 1 so use testnet else test = 0 for mainnet.
+          required: true
+          type: integer
+          format: integer
+      tags:
+        - Send
+      responses:
+        default:
+          description: API id for blockchain transaction/Error
+          schema:
+            $ref: '#/definitions/SingleResult'
+  /send/payaddress:
+    post:
+      summary: Send a value for address
+      description: |
+        Send a value for address by an blockchain transaction.
+      operationId: sendPayAddress
+      parameters:
+        - name: token
+          in: formData
+          description: a signed JWT token with the company privatekey.
+          required: true
+          type: string
+          format: string
+        - name: account
+          in: formData
+          description: API ID for Account where the coins must be spend.
+          required: true
+          type: integer
+          format: integer
+        - name: user
+          in: formData
+          description: API user name.
+          required: true
+          type: string
+          format: string
+        - name: pass
+          in: formData
+          description: API user password.
+          required: true
+          type: string
+          format: string
+        - name: address
+          in: formData
+          description: Address to send the amount.
+          required: true
+          type: string
+          format: string
+        - name: amount
+          in: formData
+          description: Amount to send
+          required: true
+          type: number
+          format: float
+        - name: coin
+          in: formData
+          description: the coin name - bitcoin/litecoin.
+          required: true
+          type: string
+          format: string
+        - name: test
+          in: formData
+          description: if test = 1 so use testnet else test = 0 for mainnet.
+          required: true
+          type: integer
+          format: integer
+      tags:
+        - Send
+      responses:
+        default:
+          description: API id for blockchain transaction/Error
+          schema:
+            $ref: '#/definitions/SingleResult'
+  /search/registered/id:
+    post:
+      summary: Get transaction informations by API ID
+      description: |
+        Get transaction informations by API ID
+      operationId: searchByAPIID
+      parameters:
+        - name: token
+          in: formData
+          description: a signed JWT token with the company privatekey.
+          required: true
+          type: string
+          format: string
+        - name: account
+          in: formData
+          description: API ID for Account where the coins must be spend.
+          required: true
+          type: integer
+          format: integer
+        - name: user
+          in: formData
+          description: API user name.
+          required: true
+          type: string
+          format: string
+        - name: pass
+          in: formData
+          description: API user password.
+          required: true
+          type: string
+          format: string
+        - name: id
+          in: formData
+          description: API id for blockchain transaction
+          required: true
+          type: integer
+          format: integer
+      tags:
+        - Search
+      responses:
+        default:
+          description: Transaction
+          schema:
+              $ref: '#/definitions/Transaction'
+  /search/registered/content:
+    post:
+      summary: Get transaction informations by file or string content
+      description: |
+        Get transaction informations by file or string content
+      operationId: searchByContent
+      parameters:
+        - name: token
+          in: formData
+          description: a signed JWT token with the company privatekey.
+          required: true
+          type: string
+          format: string
+        - name: account
+          in: formData
+          description: API ID for Account where the coins must be spend.
+          required: true
+          type: integer
+          format: integer
+        - name: user
+          in: formData
+          description: API user name.
+          required: true
+          type: string
+          format: string
+        - name: pass
+          in: formData
+          description: API user password.
+          required: true
+          type: string
+          format: string
+        - name: content
+          in: formData
+          description: file or string content.
+          required: true
+          type: string
+          format: string
+      tags:
+        - Search
+      responses:
+        default:
+          description: Transaction
+          schema:
+              $ref: '#/definitions/Transaction'
+  /search/registered/hash:
+    post:
+      summary: Get transaction informations by file or string hash
+      description: |
+        Get transaction informations by file or string hash
+      operationId: searchByHash
+      parameters:
+        - name: token
+          in: formData
+          description: a signed JWT token with the company privatekey.
+          required: true
+          type: string
+          format: string
+        - name: account
+          in: formData
+          description: API ID for Account where the coins must be spend.
+          required: true
+          type: integer
+          format: integer
+        - name: user
+          in: formData
+          description: API user name.
+          required: true
+          type: string
+          format: string
+        - name: pass
+          in: formData
+          description: API user password.
+          required: true
+          type: string
+          format: string
+        - name: hash
+          in: formData
+          description: hash of content.
+          required: true
+          type: string
+          format: string
+      tags:
+        - Search
+      responses:
+        default:
+          description: Transaction
+          schema:
+              $ref: '#/definitions/Transaction' 
+definitions:
+  Transaction:
+    type: object
+    properties:
+      creationdate:
+        type: string
+        format: date-time
+        description: API register creation date.
+      confirmationdate:
+        type: string
+        format: date-time
+        description: first confirmation date.
+      blockchaincreationdate:
+        type: string
+        format: date-time
+        description: blockchain creation date.
+      txid:
+        type: string
+        description: hash ID of blockchain transaction.
+      amount:
+        type: number
+        format: float
+        description: amount sended, 0 if OP_RETURN.
+      fee:
+        type: number
+        format: float
+        description: fee spended in the blockchain transaction.
+      txsize:
+        type: integer
+        description: tx size.
+      txhex:
+        type: string
+        description: tx hexadecimal.
+      data:
+        type: string
+        description: file or string hash or address
+      feepriority:
+        type: integer
+        description: account fee priority
+      confirmations:
+        type: integer
+        description: actual transaction confirmations count
+      errormessage:
+        type: string 
+        description: error message in case of errors
+      coin:
+        type: string
+        description: coin
+      test:
+        type: integer
+        description: test
+  SingleResult:
+    type: object
+    properties:
+      result:
+        type: string
+        description: result
+      error:
+        type: boolean
+        description: true or false
