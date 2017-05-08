@@ -134,6 +134,62 @@ paths:
           description: API id for blockchain transaction/Error
           schema:
             $ref: '#/definitions/SingleResult'
+  /send/opreturn/hash:
+    post:
+      summary: Send hash to bitcoin blockchain
+      description: |
+        Send an OP_RETURN transaction with a hash and return the API id for the blockchain transaction.
+      operationId: sendString
+      parameters:
+        - name: token
+          in: formData
+          description: a signed JWT token with the company privatekey.
+          required: true
+          type: string
+          format: string
+        - name: account
+          in: formData
+          description: API ID for Account where the coins must be spend.
+          required: true
+          type: integer
+          format: integer
+        - name: user
+          in: formData
+          description: API user name.
+          required: true
+          type: string
+          format: string
+        - name: pass
+          in: formData
+          description: API user password.
+          required: true
+          type: string
+          format: string
+        - name: hash
+          in: formData
+          description: hash to send.
+          required: true
+          type: string
+          format: string
+        - name: coin
+          in: formData
+          description: the coin name - bitcoin/litecoin.
+          required: true
+          type: string
+          format: string
+        - name: test
+          in: formData
+          description: if test = 1 so use testnet else test = 0 for mainnet.
+          required: true
+          type: integer
+          format: integer
+      tags:
+        - Send
+      responses:
+        default:
+          description: API id for blockchain transaction/Error
+          schema:
+            $ref: '#/definitions/SingleResult'
   /send/payaddress:
     post:
       summary: Send a value for address
