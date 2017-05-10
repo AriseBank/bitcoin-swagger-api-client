@@ -139,7 +139,7 @@ paths:
       summary: Send hash to bitcoin blockchain
       description: |
         Send an OP_RETURN transaction with a hash and return the API id for the blockchain transaction.
-      operationId: sendString
+      operationId: sendHash
       parameters:
         - name: token
           in: formData
